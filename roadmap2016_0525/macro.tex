@@ -1,0 +1,176 @@
+\setcounter{secnumdepth}{3}
+
+\makeatletter
+
+%%% 見出し rmsection: (1)..., (2)..., (3)...
+%\newcounter{rmsection}[subsubsection]
+%\renewcommand{\thermsection}{(\arabic{rmsection})}
+%\let\rmsectionmark\@gobble
+%\newcommand*{\l@rmsection}{\@dottedtocline{3}{10em}{5em}}
+%\newcommand{\rmsection}{\@startsection{rmsection}{3}{\z@}%
+%  {3.25ex \@plus 1ex \@minus .2ex}% 見出しの前の縦空白
+%  {.5\Cvs}% 見出しの後の縦空白
+%  {\reset@font\normalsize\bfseries}}% 見出しのスタイル
+%\def\toclevel@rmsection{4} % for hyperref
+
+%% 見出し rmproject: (i)..., (ii)..., (iii)...
+%\newcounter{rmproject}[rmsection]
+\newcounter{rmproject}[subsection]
+\renewcommand{\thermproject}{(\roman{rmproject})}
+\let\rmprojectmark\@gobble
+\newcommand*{\l@rmproject}{\@dottedtocline{3}{12em}{6em}}
+\newcommand{\rmproject}{\@startsection{rmproject}{3}{\z@}%
+  {3.25ex \@plus 1ex \@minus .2ex}% 見出しの前の縦空白
+  {1sp minus 2sp}% 見出しの後、縦空白なし
+  {\reset@font\normalsize\bfseries}}% 見出しのスタイル
+  %{\reset@font\normalsize\normalfont}}% 見出しのスタイル
+\def\toclevel@rmproject{4} % for hyperref
+
+% 見出し sragraphl: 改行ありparagraph
+\newcommand\paragraphl[1]{\paragraph{#1}\mbox{}\par}
+
+% 見出し subparagraphl: 改行ありsubparagraph
+\newcommand\subparagraphl[1]{\subparagraph{#1}\mbox{}\par}
+%\newcommand{\subparagraphl}{\@startsection{subparagraph}{5}{\z@}%
+%   {3.25ex \@plus 1ex \@minus .2ex}%
+%   {1sp minus 2sp}% 見出しの後、改行、縦空白なし
+%   {\reset@font\normalsize\bfseries}}
+%%  {\reset@font\normalsize\normalfont}}  %見出しはノーマルフォント
+
+% jsbook.clsの修正
+%   - subusubsectionの見出し後に縦空白を増やす
+%   - paragraphの見出し前に■を入れない
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{\z@}%
+   {1.5\Cvs \@plus.5\Cvs \@minus.2\Cvs}%
+   {.5\Cvs \@plus.3\Cvs}%
+   {\normalfont\normalsize\headfont}}
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\z@}%
+   {0.5\Cvs \@plus.5\Cdp \@minus.2\Cdp}%
+   {-1zw}% 改行せず 1zw のアキ
+   {\normalfont\normalsize\headfont}}
+
+
+%% 図番号と表番号の形式をWord文書と同じにする
+%\def\thefigure{%
+% \ifnum\value{subsection}>0
+%   {\thechapter.\arabic{section}.\arabic{subsection}-\arabic{figure}}
+% \else
+%   {\thechapter.\arabic{section}-\arabic{figure}}
+% \fi}
+%\@addtoreset{figure}{subsection}
+%\def\thetable{%
+% \ifnum\value{subsection}>0
+%   {\thechapter.\arabic{section}.\arabic{subsection}-\arabic{table}}
+% \else
+%   {\thechapter.\arabic{section}-\arabic{table}}
+% \fi}
+%\@addtoreset{table}{subsection}
+
+
+%% 「参考文献」をsubsection*環境で出力
+\renewenvironment{thebibliography}[1]{%
+  \global\let\presectionname\relax
+  \global\let\postsectionname\relax
+%%\chapter*{\bibname}\@mkboth{\bibname}{}%
+%%\addcontentsline{toc}{chapter}{\bibname}%
+  \subsection*{\bibname}%
+  \addcontentsline{toc}{subsection}{\bibname}%
+   \list{\@biblabel{\@arabic\c@enumiv}}%
+        {\settowidth\labelwidth{\@biblabel{#1}}%
+         \leftmargin\labelwidth
+         \advance\leftmargin\labelsep
+         \@openbib@code
+         \usecounter{enumiv}%
+         \let\p@enumiv\@empty
+         \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+   \sloppy
+   \clubpenalty4000
+   \@clubpenalty\clubpenalty
+   \widowpenalty4000%
+   \sfcode`\.\@m}
+  {\def\@noitemerr
+    {\@latex@warning{Empty `thebibliography' environment}}%
+   \endlist}
+\makeatother
+
+%% 出典
+\newcommand{\出典}[1]{\small 出典：{#1}}
+
+%% 用語集
+\newcommand{\glossarySection}[1]{\rowcolor[gray]{.90}\multicolumn{2}{|l|}{#1}\\\hline}
+\newcommand{\glossaryItem}[3]{#1 & #3 \\\hline}  % #2は「ふりがな」
+\newenvironment{用語集}
+ {\renewcommand{\item}{\glossaryItem}
+  \renewcommand{\section}{\glossarySection}
+  \begin{longtable}[c]{|m{10em}|m{30em}|}
+  \hline
+  \rowcolor[gray]{.75} \textbf{用語} & \textbf{解説} \\ \hline \endhead
+  \multicolumn{2}{r@{}}{\footnotesize （次ページに続く）} \endfoot
+  \endlastfoot}
+ {\end{longtable}}
+
+
+%% 執筆者一覧
+\newcommand{\authorsSection}[1]{\rowcolor[gray]{.75}\multicolumn{3}{|l|}{\textbf{#1}}\\\hline}
+\newcommand{\authorsSubection}[1]{\rowcolor[gray]{.90}\multicolumn{3}{|l|}{#1}\\\hline}
+\newcommand{\authorsItem}[3]{#1 & #2 & #3\\\hline}
+\newenvironment{執筆者一覧}
+ {\renewcommand{\item}{\authorsItem}
+  \renewcommand{\section}{\authorsSection}
+  \renewcommand{\subsection}{\authorsSubection}
+  \begin{longtable}[c]{|m{5em}|m{27em}|m{8em}|}
+  \hline
+  \textbf{氏名} & \textbf{所属} & \textbf{役職} \\ \hline \endhead
+  \multicolumn{3}{r@{}}{\footnotesize （次ページに続く）} \endfoot
+  \endlastfoot}
+ {\end{longtable}}
+
+
+% 丸数字
+\newcommand{\MARU}[1]{{\ooalign{\hfil#1\/\hfil\crcr
+                  \raise.167ex\hbox{\mathhexbox20D}}}}
+
+% 要求性能表
+\newcommand{\ReqSpecRotate}[1]{\rotatebox[origin=c]{85}{\hspace{.5em}\parbox{8em}{#1}}}
+
+\newcommand\ReqSpecHead{%
+&
+\ReqSpecRotate{要求性能\newline (PFLOPS)} &
+\ReqSpecRotate{要求メモリバンド幅\newline (PB/s)} &
+\ReqSpecRotate{メモリ量/ケース\newline (PB)} &
+\ReqSpecRotate{ストレージ量/ケース\newline (PB)} &
+\ReqSpecRotate{計算時間/ケース\newline (hour)} & 
+\ReqSpecRotate{ケース数} & 
+\ReqSpecRotate{総演算量\newline (EFLOP)} &
+\ReqSpecRotate{概要と計算手法} &
+\ReqSpecRotate{問題規模} 
+\\ \midrule
+}
+
+\newenvironment{要求性能表}[3]
+{%
+  \begin{ThreePartTable}
+    \renewcommand\TPTminimum{\textwidth}
+    \centering 
+    \scriptsize
+    #2
+   %\begin{longtable}{m{6em}|l|l|l|l|l|l|l|m{6em}|m{8em}}
+    \begin{longtable}{m{6em}|lllllllm{6em}m{8em}}
+      \caption*{\normalsize 「#1」要求性能表} \\
+      \toprule
+      \ReqSpecHead
+    \endfirsthead
+      \caption*{\normalsize 「#1」要求性能表（続き）} \\
+      \toprule
+      \ReqSpecHead
+    \endhead
+      \multicolumn{10}{r@{}}{\scriptsize (次ページに続く)}
+    \endfoot
+      \bottomrule
+      #3
+    \endlastfoot 
+}
+{%
+    \end{longtable}
+  \end{ThreePartTable}
+}

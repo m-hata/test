@@ -1,0 +1,91 @@
+\documentclass[11pt,a4paper]{jsbook}
+\usepackage{here}
+\usepackage{chapterbib}
+\usepackage[dvipdfmx]{graphicx,color,hyperref}
+\usepackage{pxjahyper}
+\hypersetup{%
+  pdftitle={計算科学ロードマップ},
+  pdfauthor={今後のHPCIを使った計算科学発展のための検討会},
+  bookmarksnumbered=true,
+  colorlinks=true,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black,
+}
+
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{threeparttablex}
+\usepackage{wrapfig}
+
+\input macro.tex
+
+\setlength{\textwidth}{\fullwidth}
+\setlength{\evensidemargin}{\oddsidemargin}
+
+% 参考文献スタイル
+%\newcommand{\rmbibstyle}{jplain}
+\newcommand{\rmbibstyle}{junsrt}
+
+\begin{document}
+\title{計算科学ロードマップ\\
+〜 大規模並列計算によるイノベーションの目指す\\
+社会貢献・科学的成果 〜}
+\author{今後のHPCIを使った計算科学発展のための検討会}
+\date{平成28年X月}
+\maketitle
+
+\tableofcontents
+
+\mainmatter
+
+\chapter{序論}
+\include{1-1} % はじめに
+\include{1-2} % 分野連携・大規模実験施設
+\include{1-3} % 将来実現しうる大規模計算機
+
+\chapter{各計算科学分野の課題}
+\include{2-1} % 素粒子・原子核
+\include{2-2} % ナノサイエンス・デバイス
+\include{2-3} % エネルギー・材料
+\include{2-4} % 生命科学
+\include{2-5} % 創薬・医療
+\include{2-6} % 設計・製造
+\include{2-7} % 社会科学
+\include{2-8} % 脳科学・人工知能
+\include{2-9} % 地震・津波
+\include{2-10} % 気象・気候
+\include{2-11} % 宇宙・天文
+
+\chapter{アプリケーションの分類}
+\include{3-1} % ミニアプリとの対応
+\include{3-2} % 計算機アーキテクチャから見たアプリケーションの分類
+
+\chapter{各課題の詳細}
+\include{4-1} % 素粒子・原子核
+\include{4-2} % ナノサイエンス・デバイス
+\include{4-3} % エネルギー・材料
+\include{4-4} % 生命科学
+\include{4-5} % 創薬・医療
+\include{4-6} % 設計・製造
+\include{4-7} % 社会科学
+\include{4-8} % 脳科学・人工知能
+\include{4-9} % 地震・津波
+\include{4-10} % 気象・気候
+\include{4-11} % 宇宙・天文
+
+\chapter{おわりに}
+%\input 5.tex
+
+\appendix
+\chapter{用語集}
+\input glossary.tex
+
+\chapter{執筆者一覧}
+\input authors.tex
+
+\end{document}
